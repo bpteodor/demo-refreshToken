@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class MyTokenRefresher implements Function<String, String> {
     final String scope;
 
     static int index = 0;
+    final String run = RandomStringUtils.randomNumeric(6);
 
     @SneakyThrows
     @Override
@@ -53,7 +55,7 @@ public class MyTokenRefresher implements Function<String, String> {
                 .uri(tokenEndpoint)
                 .POST(HttpRequest.BodyPublishers.ofString(data))
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("x-trace-id", "teo-test" + index)
+                .header("x-request-id", "drt-test-" + run + "-" + index)
                 .build();
 
         final HttpResponse<String> resp = HttpClient.newHttpClient().send(req, ofString(UTF_8));
