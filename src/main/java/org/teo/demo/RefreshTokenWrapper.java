@@ -20,7 +20,7 @@ import static org.apache.commons.lang3.StringUtils.appendIfMissing;
 public class RefreshTokenWrapper {
 
     final DecodedJWT decodedJWT;
-    Map<String, Object> discoveryData;
+    static Map<String, Object> discoveryData;
 
     public RefreshTokenWrapper(String token) {
         decodedJWT = JWT.decode(token);
