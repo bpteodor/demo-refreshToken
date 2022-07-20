@@ -1,3 +1,9 @@
+FROM maven:3-openjdk-18-slim as builder
+
+COPY . .
+
+RUN mvn clean install
+
 FROM openjdk:17-slim
 
 LABEL maintainer="Teo<teodor.bran@ic-consult.com>"
@@ -13,7 +19,7 @@ RUN apt-get update \
 
 RUN adduser --home /srv/app --uid 1000 --gecos "" --ingroup root --system app
 
-COPY --chown=1000:0 target/app-jar-with-dependencies.jar /srv/app/drt.jar
+COPY --from=builder --chown=1000:0 target/app-jar-with-dependencies.jar /srv/app/drt.jar
 
 USER 1000
 
