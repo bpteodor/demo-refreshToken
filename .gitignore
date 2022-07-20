@@ -1,0 +1,9 @@
+# project specific
+/config/
+
+# intellij
+.idea/
+*.iml
+
+# maven
+target/
